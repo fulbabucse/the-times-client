@@ -1,0 +1,10 @@
+.follow_us_icon {
+  display: flex;
+  align-items: center;
+}
+
+.follow_us_icon a {
+  text-decoration: none;
+  font-size: 18px;
+  color: rgb(53, 53, 192);
+}
