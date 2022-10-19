@@ -1,9 +1,14 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
+import SharedNewsCard from "../../SharedPages/SharedNewsCard/SharedNewsCard";
 
 const Home = () => {
+  const homeNews = useLoaderData();
   return (
-    <div>
-      <h3>This is home pages</h3>
+    <div className="d-flex flex-column gap-3">
+      {homeNews.map((news) => (
+        <SharedNewsCard key={news._id} news={news}></SharedNewsCard>
+      ))}
     </div>
   );
 };
