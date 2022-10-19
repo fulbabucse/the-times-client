@@ -1,11 +1,14 @@
 import React from "react";
+import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSide from "../LeftSide/LeftSide";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
   return (
     <Navbar
       collapseOnSelect
@@ -45,7 +48,7 @@ const Header = () => {
               to="/home"
               className="text-decoration-none text-white mt-2 ms-2"
             >
-              User
+              {user?.displayName}
             </NavLink>
           </Nav>
           <div className="d-lg-none">
