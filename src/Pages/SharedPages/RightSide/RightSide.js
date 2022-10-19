@@ -14,12 +14,29 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BrandCarousel from "../Carousel/BrandCarousel";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const RightSide = () => {
+  const { googleSignIn } = useContext(AuthContext);
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div>
       <ButtonGroup vertical className="d-flex gap-2">
-        <Button variant="outline-secondary" className="rounded-1">
+        <Button
+          onClick={handleGoogleSignIn}
+          variant="outline-secondary"
+          className="rounded-1"
+        >
           <FaGoogle></FaGoogle> Log in with Google
         </Button>
         <Button variant="outline-success" className="rounded-1">

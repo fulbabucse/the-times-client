@@ -1,4 +1,5 @@
 import React from "react";
+import "./Header.css";
 import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -6,6 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSide from "../LeftSide/LeftSide";
+import UserThumb from "../../../assets/user.png";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
@@ -40,16 +42,16 @@ const Header = () => {
               Contact Us
             </NavLink>
           </Nav>
-          <Nav>
-            <NavLink>
-              <button className="btn btn-secondary">+ Advertise</button>
-            </NavLink>
+          <Nav className="d-flex align-items-center gap-2">
             <NavLink
               to="/home"
               className="text-decoration-none text-white mt-2 ms-2"
             >
               {user?.displayName}
             </NavLink>
+            <div className="user-img">
+              <img src={user?.photoURL || UserThumb} alt={user?.displayName} />
+            </div>
           </Nav>
           <div className="d-lg-none">
             <LeftSide></LeftSide>
