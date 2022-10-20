@@ -8,16 +8,14 @@ import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 function Signin() {
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const handleUserSignIn = (e) => {
     setError("");
-    setSuccess("");
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -34,13 +32,13 @@ function Signin() {
             "Your email address is not verified. Please, verify email address."
           );
         }
-        setSuccess("Account login successfully !!");
         console.log(user);
       })
       .catch((err) => {
         console.error(err);
         setError("Invalid email or password !!");
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -66,7 +64,6 @@ function Signin() {
 
         <div>
           <p className="text-danger">{error}</p>
-          <p>{success}</p>
         </div>
         <div className="text-center">
           <Button variant="primary" type="submit">
