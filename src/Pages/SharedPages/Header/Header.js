@@ -57,6 +57,11 @@ const Header = () => {
               title={user?.displayName || user?.email || `User Name`}
               menuVariant="dark"
             >
+              {user?.uid && (
+                <div className="user-profile">
+                  <Link to="/profile">Profile</Link>
+                </div>
+              )}
               {user?.uid ? (
                 <button
                   onClick={handleSignOut}
