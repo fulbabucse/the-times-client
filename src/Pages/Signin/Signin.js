@@ -2,12 +2,17 @@ import { useState } from "react";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 function Signin() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const { signInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const handleUserSignIn = (e) => {
     setError("");
     setSuccess("");
@@ -18,9 +23,8 @@ function Signin() {
 
     signInUser(email, password)
       .then((res) => {
-        const user = res.user;
         form.reset();
-        console.log(user);
+        navigate(from, { replace: true });
         setSuccess("Account login successfully !!");
       })
       .catch((err) => {
