@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 function Signin() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
   const { signInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,15 +25,24 @@ function Signin() {
 
     signInUser(email, password)
       .then((res) => {
+        const user = res.user;
         form.reset();
-        navigate(from, { replace: true });
+        if (res.emailVerified) {
+          navigate(from, { replace: true });
+        } else {
+          toast.error(
+            "Your email address is not verified. Please, verify email address."
+          );
+        }
         setSuccess("Account login successfully !!");
+        console.log(user);
       })
       .catch((err) => {
         console.error(err);
         setError("Invalid email or password !!");
       });
   };
+
   return (
     <div className="w-75 mx-auto mt-4">
       <div className="text-center">
@@ -51,9 +62,12 @@ function Signin() {
             name="password"
             placeholder="Enter Password"
           />
+        </Form.Group>
+
+        <div>
           <p className="text-danger">{error}</p>
           <p>{success}</p>
-        </Form.Group>
+        </div>
         <div className="text-center">
           <Button variant="primary" type="submit">
             Sign In

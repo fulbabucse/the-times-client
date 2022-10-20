@@ -3,6 +3,7 @@ import Root from "../../layout/Root";
 import Category from "../../Pages/Category/Category/Category";
 import Home from "../../Pages/Home/Home/Home";
 import News from "../../Pages/News/News/News";
+import TermsConditions from "../../Pages/SharedPages/TermsConditions/TermsConditions";
 import Signin from "../../Pages/Signin/Signin";
 import Signup from "../../Pages/Signup/Signup";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       },
       { path: "signin", element: <Signin></Signin> },
       { path: "signup", element: <Signup></Signup> },
+      {
+        path: "terms-conditions",
+        element: <TermsConditions></TermsConditions>,
+      },
     ],
   },
 ]);

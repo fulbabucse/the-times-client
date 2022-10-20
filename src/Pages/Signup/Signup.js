@@ -2,12 +2,16 @@ import { useState } from "react";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 function Signup() {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updatesUserProfile, emailVerify } =
+    useContext(AuthContext);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [termsCheck, setTermsCheck] = useState(false);
   const handleUserSignUp = (e) => {
     e.preventDefault();
     setSuccess("");
@@ -23,14 +27,38 @@ function Signup() {
       .then((res) => {
         const user = res.user;
         form.reset();
-        console.log(user);
         setSuccess("Account created successfully !!");
+        userProfileUpdates(name, photoLink);
+        handleEmailVerify();
+        toast.success("Please verify your email address");
+        console.log(user);
       })
       .catch((err) => {
         console.error(err);
         setError("This email already have exists !!!");
       });
   };
+
+  const userProfileUpdates = (name, photoLink) => {
+    const updatesInfo = {
+      displayName: name,
+      photoURL: photoLink,
+    };
+    updatesUserProfile(updatesInfo)
+      .then((res) => {})
+      .catch((err) => console.error(err));
+  };
+
+  const handleEmailVerify = () => {
+    emailVerify()
+      .then((res) => {})
+      .catch((err) => console.error(err));
+  };
+
+  const handleTermsCheck = (e) => {
+    setTermsCheck(e.target.checked);
+  };
+
   return (
     <div>
       <div className="text-center">
@@ -64,10 +92,21 @@ function Signup() {
             name="password"
             placeholder="Enter Password"
           />
-          <p className="text-danger">{error}</p>
-          <p>{success}</p>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type="checkbox"
+            onClick={handleTermsCheck}
+            label={
+              <>
+                Accept <Link to="/terms-conditions">Terms and conditions</Link>
+              </>
+            }
+          />
+        </Form.Group>
+        <p className="text-danger">{error}</p>
+        <p>{success}</p>
+        <Button variant="primary" type="submit" disabled={!termsCheck}>
           Sign Up
         </Button>
       </Form>
