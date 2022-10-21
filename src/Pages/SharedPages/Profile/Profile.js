@@ -6,18 +6,28 @@ import Form from "react-bootstrap/Form";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 function Profile() {
-  const { user } = useContext(AuthContext);
-  const [userName, setUserName] = useState(user.displayName);
+  const { user, updatesUserProfile } = useContext(AuthContext);
 
+  const userNameRef = useRef(user.displayName);
   const photoRef = useRef(user.photoURL);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(photoRef.current.value);
+    const name = userNameRef.current.value;
+    const photoUrl = photoRef.current.value;
+    handleUpdatesProfile(name, photoUrl);
   };
 
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
+  const handleUpdatesProfile = (name, photo) => {
+    const updateInfo = {
+      displayName: name,
+      photoURL: photo,
+    };
+    updatesUserProfile(updateInfo)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -29,7 +39,7 @@ function Profile() {
           <Form.Control
             defaultValue={user?.displayName}
             type="text"
-            onChange={handleUserNameChange}
+            ref={userNameRef}
             placeholder="Name"
           />
         </Form.Group>
@@ -53,12 +63,8 @@ function Profile() {
             placeholder="Update photo link"
           />
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          Save
         </Button>
       </Form>
     </div>

@@ -25,7 +25,7 @@ function Signin() {
       .then((res) => {
         const user = res.user;
         form.reset();
-        if (res.emailVerified) {
+        if (user.emailVerified) {
           navigate(from, { replace: true });
         } else {
           toast.error(
