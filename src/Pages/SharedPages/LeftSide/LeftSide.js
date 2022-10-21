@@ -7,7 +7,7 @@ const LeftSide = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/news-categories")
+    fetch("https://the-times-server.vercel.app/news-categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error(err));

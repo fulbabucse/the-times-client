@@ -52,10 +52,10 @@ function Profile() {
   };
 
   const handleDeleteUser = () => {
-    toast.error("Account deleted successfully");
     deleteUserProfile()
       .then((res) => {})
       .catch((err) => console.error(err));
+    toast.error("Account deleted successfully");
   };
 
   return (

@@ -9,7 +9,7 @@ import Signin from "../../Pages/Signin/Signin";
 import Signup from "../../Pages/Signup/Signup";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
-const allNews = () => fetch("http://localhost:5000/news");
+const allNews = () => fetch("https://the-times-server.vercel.app/news");
 
 export const router = createBrowserRouter([
   {
@@ -25,13 +25,13 @@ export const router = createBrowserRouter([
       {
         path: "/category/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/category/${params.id}`),
+          fetch(`https://the-times-server.vercel.app/category/${params.id}`),
         element: <Category></Category>,
       },
       {
         path: "/news/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/news/${params.id}`),
+          fetch(`https://the-times-server.vercel.app/news/${params.id}`),
         element: (
           <PrivateRoute>
             <News></News>
