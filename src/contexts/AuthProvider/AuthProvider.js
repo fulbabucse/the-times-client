@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updatePassword,
   updateProfile,
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
@@ -33,6 +34,10 @@ const AuthProvider = ({ children }) => {
 
   const emailVerify = () => {
     return sendEmailVerification(auth.currentUser);
+  };
+
+  const changedPassword = (newPassword) => {
+    return updatePassword(auth.currentUser, newPassword);
   };
 
   useEffect(() => {
@@ -67,6 +72,7 @@ const AuthProvider = ({ children }) => {
     updatesUserProfile,
     emailVerify,
     setLoading,
+    changedPassword,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
