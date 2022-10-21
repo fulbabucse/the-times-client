@@ -90,7 +90,11 @@ const Header = () => {
             </NavDropdown>
           </Nav>
           <Nav className="user-img">
-            <Image src={user?.photoURL || UserThumb} alt={user?.displayName} />
+            <Image
+              className="text-white"
+              src={user?.photoURL || UserThumb}
+              alt={user?.displayName}
+            />
           </Nav>
           <div className="d-lg-none">
             <LeftSide></LeftSide>
