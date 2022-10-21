@@ -11,11 +11,12 @@ import UserThumb from "../../../assets/user.png";
 import toast from "react-hot-toast";
 
 function Profile() {
-  const { user, updatesUserProfile, changedPassword } = useContext(AuthContext);
+  const { user, updatesUserProfile, changedPassword, deleteUserProfile } =
+    useContext(AuthContext);
+
   const userNameRef = useRef(user.displayName);
   const photoRef = useRef(user.photoURL);
   const contactNumberRef = useRef(user.phoneNumber);
-
   const updatePasswordRef = useRef();
 
   const handleFormSubmit = (e) => {
@@ -46,6 +47,13 @@ function Profile() {
     const updatedPassword = updatePasswordRef.current.value;
 
     changedPassword(updatedPassword)
+      .then((res) => {})
+      .catch((err) => console.error(err));
+  };
+
+  const handleDeleteUser = () => {
+    toast.error("Account deleted successfully");
+    deleteUserProfile()
       .then((res) => {})
       .catch((err) => console.error(err));
   };
@@ -150,12 +158,19 @@ function Profile() {
                 ref={updatePasswordRef}
                 type="password"
                 placeholder="Password"
+                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">
               Change Password
             </Button>
           </Form>
+        </Tab>
+
+        <Tab eventKey="danger" title="Danger Zone">
+          <Button onClick={handleDeleteUser} variant="danger" type="submit">
+            Delete Account
+          </Button>
         </Tab>
       </Tabs>
     </div>

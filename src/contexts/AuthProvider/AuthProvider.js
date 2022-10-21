@@ -2,6 +2,7 @@ import React from "react";
 import { createContext } from "react";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -62,6 +63,10 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const deleteUserProfile = () => {
+    return deleteUser(auth.currentUser);
+  };
+
   const authInfo = {
     user,
     googleSignIn,
@@ -73,6 +78,7 @@ const AuthProvider = ({ children }) => {
     emailVerify,
     setLoading,
     changedPassword,
+    deleteUserProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
